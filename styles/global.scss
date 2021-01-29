@@ -1,0 +1,41 @@
+@import './reset';
+@import './slider';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Kanit', sans-serif;
+  color: white;
+  background-color: #020414;
+  background-image: linear-gradient(to bottom, #020414 0%, #020414 90%, #FF002E 100%);
+}
+
+
+::selection {
+  background-color: rgb(255 0 46 / 20%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.animate-heart {
+  animation: heart-burst .8s steps(28) forwards;
+}
+
+@keyframes heart-burst {
+  0% {
+    background-position: left
+  }
+  100% {
+    background-position: right
+  }
+}
+
+@media(min-width: 1024px) {
+  html {
+    font-size: 24px;
+  }
+}

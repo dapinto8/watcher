@@ -1,0 +1,39 @@
+@import 'swiper/swiper.min.css';
+@import 'swiper/components/pagination/pagination.min.css';
+
+.swiper-container {
+  padding: 0 1.25em;
+
+  .swiper-wrapper {
+    .swiper-slide.movie {
+      max-width: 140px;
+    }
+    .swiper-slide.cast {
+      max-width: 120px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .swiper-container {
+    .swiper-wrapper {
+      .swiper-slide.movie {
+        max-width: 200px;
+      }
+      .swiper-slide.cast {
+        max-width: 180px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .swiper-container {
+    padding: 0 1.75em;
+    .swiper-wrapper {
+      .swiper-slide.movie {
+        max-width: 240px;
+      }
+    }
+  }
+}
