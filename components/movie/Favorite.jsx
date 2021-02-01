@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-// import { useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { useUser } from '@/context/userContext';
 import { markAsFavorite } from '@/api/movie';
 import styled from 'styled-components';
@@ -17,7 +17,7 @@ const HeartButton = styled.button`
 `;
 
 export default function Favorite({ movieId, defaultFavorite }) {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { user } = useUser();
   const [cookies] = useCookies(['session_id']);
   const [favorite, setFavorite] = useState(defaultFavorite);
@@ -29,7 +29,7 @@ export default function Favorite({ movieId, defaultFavorite }) {
   const mark = async () => {
     setFavorite(!favorite);
     const res = await markAsFavorite(user.id, cookies.session_id, movieId, !favorite);
-    // queryClient.refetchQueries(['favoriteMovies']);
+    queryClient.refetchQueries(['favoriteMovies']);
   };
 
   return user ? (
