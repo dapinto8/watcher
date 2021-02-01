@@ -1,4 +1,5 @@
 import { useSearch } from '@/api/movie.hooks';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Seo from '@/components/Seo';
 import Error from '@/components/Error';
@@ -74,6 +75,7 @@ const ButtonWrapper = styled.div`
 export default function Search({ query }) {
 
   const { status, data, error, isFetchingNextPage, hasNextPage, fetchNextPage } = useSearch(query);
+  const router = useRouter();
 
   return (
     <Wrapper>
@@ -88,7 +90,13 @@ export default function Search({ query }) {
             {data.pages
               .flatMap(page => page.data.results)
               .map(movie => (
-                <MovieItem key={movie.id}>
+                <MovieItem
+                  key={movie.id}
+                  role="button"
+                  onClick={() =>
+                    router.push(`/movie/${encodeURIComponent(movie.id)}`)
+                  }
+                >
                   <Image
                     src={
                       movie.poster_path
@@ -106,13 +114,13 @@ export default function Search({ query }) {
                 </MovieItem>
               ))}
           </MovieList>
-          {hasNextPage &&
+          {hasNextPage && (
             <ButtonWrapper>
               <Button onClick={() => fetchNextPage()}>
                 {!isFetchingNextPage ? 'Load more' : 'Loading more results'}
-              </Button>     
+              </Button>
             </ButtonWrapper>
-          }
+          )}
         </>
       )}
     </Wrapper>
