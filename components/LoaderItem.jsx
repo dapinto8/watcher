@@ -1,11 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeInOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
 const Loader = styled.div`
   width: 140px;
   height: 210px;
-  margin-right: 1em;
-  background-color: ${({ theme }) => theme.colors.primary}80;
+  margin-right: 1rem;
+  background-color: #FF002E80;
   border-radius: 8px;
+  animation: ${fadeInOut} 4s ease-out infinite;
 
   @media (min-width: 768px) {
     width: 200px;

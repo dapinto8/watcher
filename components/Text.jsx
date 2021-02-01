@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 
 export const SectionTitle = styled.h2`
-  padding: 0 1em;
-  margin-bottom: 0.75em;
-  font-size: 24px;
+  padding: 0 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary};
+  color: #FF002E;
   text-transform: uppercase;
 
-  @media (min-width: 1024px) {
-    padding: 0 2em;
+  @media (min-width: 768px) {
+    padding: 0 2rem;
   }
 `;
 

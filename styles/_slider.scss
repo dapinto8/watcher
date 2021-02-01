@@ -2,7 +2,7 @@
 @import 'swiper/components/pagination/pagination.min.css';
 
 .swiper-container {
-  padding: 0 1.25em;
+  padding: 0 1rem;
 
   .swiper-wrapper {
     .swiper-slide.movie {
@@ -16,6 +16,7 @@
 
 @media (min-width: 768px) {
   .swiper-container {
+    padding: 0 1.5rem;
     .swiper-wrapper {
       .swiper-slide.movie {
         max-width: 200px;
@@ -29,7 +30,6 @@
 
 @media (min-width: 1024px) {
   .swiper-container {
-    padding: 0 1.75em;
     .swiper-wrapper {
       .swiper-slide.movie {
         max-width: 240px;

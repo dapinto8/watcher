@@ -2,9 +2,9 @@ import Head from 'next/head';
 
 export default function Seo({
   title,
-  description = 'Watcher is a web for see popular, top rated, upcoming and new movies',
+  description = 'Watcher is a web for know more about the movies you like. You can search popular, top rated, upcoming and new movies',
   image = '/images/background.jpg',
-  keywords = 'Movies, Actors, Synopsis, Trailers, Cast',
+  keywords = 'Watcher, Movies, Actors, Trailers, Cast',
   path = ''
 }) {
 

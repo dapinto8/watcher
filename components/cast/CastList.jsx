@@ -1,5 +1,5 @@
 import CastItem from './CastItem';
-import { useCast } from '@/lib/api/movie';
+import { useCast } from '@/api/movie.hooks';
 import styled from 'styled-components';
 import { SectionTitle } from '@/components/Text';
 import SwiperCore, { Navigation } from 'swiper';
@@ -11,14 +11,13 @@ const Wrapper = styled.section`
 `;
 
 export default function CastList({ movieId }) {
-
   const { status, data, error } = useCast(movieId);
 
   return status === 'loading' ? (
     <p>Loading...</p>
   ) : status === 'error' ? (
     <p>Error: {error.message}</p>
-  ) : (
+  ) : data.cast.length > 0 ? (
     <Wrapper>
       <SectionTitle>Cast</SectionTitle>
       <Swiper
@@ -27,12 +26,14 @@ export default function CastList({ movieId }) {
         slidesPerView={'auto'}
         freeMode={true}
       >
-        {data.cast.slice(0, 20).map((person) => (
+        {data.cast.slice(0, 20).map(person => (
           <SwiperSlide key={person.id} className="cast">
             <CastItem person={person} />
           </SwiperSlide>
         ))}
       </Swiper>
     </Wrapper>
+  ) : (
+    <></>
   );
 }

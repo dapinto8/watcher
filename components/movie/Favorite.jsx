@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { markAsFavorite } from '@/lib/api/movie';
+// import { useQueryClient } from 'react-query';
+import { useUser } from '@/context/userContext';
+import { markAsFavorite } from '@/api/movie';
 import styled from 'styled-components';
 
 const HeartButton = styled.button`
@@ -14,17 +16,29 @@ const HeartButton = styled.button`
   cursor: pointer;
 `;
 
-export default function Favorite({ movieId, deafultFavorite = false }) {
-  const [cookies, setCookie] = useCookies(['session_id']);
-  const [favorite, setFavorite] = useState(deafultFavorite);
+export default function Favorite({ movieId, defaultFavorite }) {
+  // const queryClient = useQueryClient();
+  const { user } = useUser();
+  const [cookies] = useCookies(['session_id']);
+  const [favorite, setFavorite] = useState(defaultFavorite);
+
+  useEffect(() => {
+    setFavorite(defaultFavorite);
+  }, [defaultFavorite]);
 
   const mark = async () => {
-    const res = await markAsFavorite(movieId, cookies.session_id);
-    console.log(res)
-  }
-  return (
+    setFavorite(!favorite);
+    const res = await markAsFavorite(user.id, cookies.session_id, movieId, !favorite);
+    // queryClient.refetchQueries(['favoriteMovies']);
+  };
+
+  return user ? (
     <HeartButton
+      data-testid="favorite"
+      onClick={() => mark()}
       className={favorite ? 'animate-heart' : ''}
     />
+  ) : (
+    <></>
   );
 }

@@ -1,23 +1,27 @@
 import Seo from '@/components/Seo';
-import styled from 'styled-components';
-import { getRandomMovie, useNowPlaying, useTopRated, usePopular, useUpcoming } from '@/lib/api/movie';
-import MovieInfiniteList from '@/components/movie/MovieInfiniteList';
+import { getRandomMovie } from '@/api/movie';
+import { useNowPlaying, useTopRated, usePopular, useUpcoming } from '@/api/movie.hooks';
 import MovieHero from '@/components/movie/MovieHero';
+import FavoriteMovies from '@/components/movie/FavoriteMovies';
+import MovieInfiniteList from '@/components/movie/MovieInfiniteList';
+import styled from 'styled-components';
 
 const ListsWrapper = styled.section`
-  margin-top: 2em;
+  padding: 1.5em 0;
 `;
 
 export default function Home({ movie }) {
+
   return (
     <div>
       <Seo title="Home" />
       <MovieHero movie={movie} />
       <ListsWrapper>
-        <MovieInfiniteList title="New movies" fetcher={useNowPlaying} />
-        <MovieInfiniteList title="Top rated" fetcher={useTopRated} />
-        <MovieInfiniteList title="Popular" fetcher={usePopular} />
+        <FavoriteMovies />
         <MovieInfiniteList title="Upcoming" fetcher={useUpcoming} />
+        <MovieInfiniteList title="New movies" fetcher={useNowPlaying} />
+        <MovieInfiniteList title="Popular" fetcher={usePopular} />
+        <MovieInfiniteList title="Top rated" fetcher={useTopRated} />
       </ListsWrapper>
     </div>
   );

@@ -1,5 +1,5 @@
-import MovieList from '@/components/movie/MovieList';
-import { useRecommendations } from '@/lib/api/movie';
+import MovieList from './MovieList';
+import { useRecommendations } from '@/api/movie.hooks';
 
 export default function MovieRecommendations({ movieId }) {
   const { status, data, error } = useRecommendations(movieId);

@@ -1,7 +1,7 @@
-import { withRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
-import { createRequestToken } from '@/lib/api/auth';
+import { useUser } from '@/context/userContext';
+import { createRequestToken } from '@/api/auth';
 import Link from 'next/link';
+import Search from '@/components/Search';
 import styled from 'styled-components';
 
 const Header = styled.header`
@@ -13,55 +13,55 @@ const Header = styled.header`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 1em;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
 
-  @media (min-width: 1024px) {
-    padding: 1em 2em;
+  @media(min-width: 768px) {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
   }
-`;
-
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
 `;
 
 const Logo = styled.img`
   width: 48px;
   height: 48px;
-  margin-right: 0.5em;
+  margin-right: 0.5rem;
 `;
 
 const LogoText = styled.span`
   vertical-align: middle;
-  font-size: 20px;
   color: white;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+
+  > *:not(:last-child) {
+    margin-right: 1rem;
+  }
 `;
 
 const NavLink = styled.a`
   display: inline-block;
-  font-size: 18px;
   color: white;
   text-transform: uppercase;
-  transition: color .3s ease-out;
+  transition: color 0.3s ease-out;
   cursor: pointer;
 
-  &:first-child {
-    margin-right: 1em;
-  }
   &:hover {
-    color: ${({ theme }) => theme.colors.primary}
+    color: #ff002e;
   }
 `;
 
-function HeaderComponent({ router }) {
-
-  const [cookies, setCookie] = useCookies(['session_id']);
+function HeaderComponent() {
+  const { user } = useUser();
 
   const login = () => {
-    // createRequestToken().then(({ request_token }) => {
-    //   window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=${process.env.SITE_URL}/session`;
-    // });
-  }
+    createRequestToken().then(({ request_token }) => {
+      window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=${process.env.SITE_URL}/session`;
+    });
+  };
 
   return (
     <Header>
@@ -71,26 +71,25 @@ function HeaderComponent({ router }) {
           <LogoText>Watcher</LogoText>
         </a>
       </Link>
-      <div>
-        <NavLink onClick={() => login()}>
-          Login
-        </NavLink>
-        <NavLink href="https://www.themoviedb.org/signup" target="_blank" rel="noopener noreferrer">
-          Sign up
-        </NavLink>
-        {/*{router.pathname === '/' ? (
-          <Link href="/">
-            <a><Icon src="/icons/home-icon-active.svg" alt="Home" /></a>
-          </Link>
+      <Flex>
+        <Search />
+        {user ? (
+          <p>Hi, {user.username}</p>
         ) : (
-          <Link href="/">
-            <a><Icon src="/icons/home-icon.svg" alt="Home" /></a>
-          </Link>
-        )}*/}
-      </div>
-      
+          <>
+            <NavLink onClick={() => login()}>Login</NavLink>
+            <NavLink
+              href="https://www.themoviedb.org/signup"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Sign up
+            </NavLink>
+          </>
+        )}
+      </Flex>
     </Header>
   );
 }
 
-export default withRouter(HeaderComponent);
+export default HeaderComponent;

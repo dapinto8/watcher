@@ -1,12 +1,23 @@
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+import { useUser } from '@/context/userContext';
 import Head from 'next/head';
 import Header from './Header';
-import styled from 'styled-components';
-
-const Main = styled.div`
-  padding-bottom: 2em;
-`;
 
 export default function Layout({ children }) {
+  const [cookies, setCookie] = useCookies(['session_id', 'user']);
+  const { user, getUser, setUser } = useUser();
+
+  useEffect(() => {
+    if (cookies.user && !user) {
+      setUser(cookies.user);
+    } else if (!cookies.user && !user && cookies.session_id) {
+      getUser(cookies.session_id).then(user => {
+        setCookie('user', user);
+      });
+    }
+  }, [cookies, user])
+
   return (
     <>
       <Head>
@@ -20,7 +31,7 @@ export default function Layout({ children }) {
         />
       </Head>
       <Header />
-      <Main>{children}</Main>
+      <main>{children}</main>
     </>
   );
 }

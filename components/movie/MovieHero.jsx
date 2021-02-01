@@ -1,18 +1,17 @@
 import Link from 'next/link';
-import Favorite from './Favorite';
 import styled from 'styled-components';
 
 const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 `;
 
 const SmallLightText = styled.p`
-  padding: 0 0.5em;
+  padding: 0 0.5rem;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.75em;
   font-weight: 300;
   color: white;
 `;
@@ -23,9 +22,9 @@ const SmallLightBackText = styled(SmallLightText)`
   justify-content: space-between;
   width: max-content;
   margin: 0 auto;
-  padding: 0.25em 0.5em;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.alt};
+  background-color: rgb(255 0 46 / 20%);
 `;
 
 const MovieBackground = styled.div`
@@ -37,9 +36,11 @@ const MovieBackground = styled.div`
   height: 60vh;
   background-image: linear-gradient(
       to bottom,
-      ${({ theme }) => theme.colors.secondary} 5%,
+      #020414 5%,
       transparent 50%,
-      ${({ theme }) => theme.colors.secondary} 90%
+      rgb(2 4 20 / 60%) 70%,
+      rgb(2 4 20 / 95%) 90%,
+      #020414 100%
     ),
     url(${({ image }) => image});
   background-size: cover;
@@ -49,11 +50,19 @@ const MovieBackground = styled.div`
   cursor: pointer;
 `;
 
-const MovieInfo = styled.div``;
+const MovieInfo = styled.div`
+  @media(min-width: 768px) {
+    font-size: 20px
+  }
+
+  @media(min-width: 1024px) {
+    font-size: 24px
+  }
+`;
 
 const MovieTitleWrapper = styled.div`
   position: relative;
-  width: 600px;
+  max-width: 600px;
   margin: 0 auto;
 `;
 
@@ -61,11 +70,11 @@ const MovieTitle = styled.h1`
   padding: 0.25em 0.5em;
   text-align: center;
   text-transform: uppercase;
-  font-size: 1.75rem;
-  line-height: 2rem;
+  font-size: 1.75em;
+  line-height: 1em;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary};
-  transition: all .2s ease-out;
+  color: #FF002E;
+  transition: all 0.2s ease-out;
 
   &:hover {
     color: white;
@@ -84,15 +93,13 @@ const FavoriteWrapper = styled.div`
 `;
 
 export default function MovieHero({ movie }) {
-  // console.log(movie);
+
+  let image = movie.backdrop_path || movie.poster_path;
+  image = image ? `${process.env.IMAGES_URL}/original${image}` : '/images/background.jpg';
 
   return (
     <section>
-      <MovieBackground
-        image={`${process.env.IMAGES_URL}/original${
-          movie.backdrop_path || movie.poster_path
-        }`}
-      >
+      <MovieBackground image={image}>
         <MovieInfo>
           {movie.production_companies.length > 0 && (
             <SmallLightText>
@@ -105,12 +112,9 @@ export default function MovieHero({ movie }) {
                 <a>{movie.title}</a>
               </Link>
             </MovieTitle>
-            <FavoriteWrapper>
-              <Favorite movieId={movie.id} />
-            </FavoriteWrapper>
           </MovieTitleWrapper>
           <FlexContainer>
-            {movie.genres.map((genre) => (
+            {movie.genres.map(genre => (
               <SmallLightText key={genre.id}>{genre.name}</SmallLightText>
             ))}
           </FlexContainer>

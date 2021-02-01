@@ -1,18 +1,18 @@
-import LoaderItem from '@/components/LoaderItem';
-import { SectionTitle } from '@/components/Text';
+import LoaderItem from './LoaderItem';
+import { SectionTitle } from './Text';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
-  padding: 0.5em 0;
+  padding: 0.5rem 0;
 `;
 
 const FlexWrapper = styled.div`
   display: flex;
   overflow: hidden;
-  padding: 0 1.25em;
-  
+  padding: 0 1.25rem;
+
   @media (min-width: 1024px) {
-    padding: 0 1.75em;
+    padding: 0 1.75rem;
   }
 `;
 
@@ -26,7 +26,7 @@ export default function LoaderList({ title }) {
       <SectionTitle>{title}</SectionTitle>
       <FlexWrapper>
         <FlexContainer>
-          {[...Array(10).keys()].map((num) => (
+          {[...Array(10).keys()].map(num => (
             <LoaderItem key={num} />
           ))}
         </FlexContainer>
