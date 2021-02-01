@@ -14,8 +14,6 @@ const Wrapper = styled.section`
 `;
 
 export default function Movie({ movie }) {
-  // const { status, data: trailer, error } = useTrailer(movie.id);
-  // console.log(trailer);
 
   const router = useRouter();
   
@@ -39,7 +37,6 @@ export default function Movie({ movie }) {
       <MovieHero movie={movie} />
       <Wrapper>
         <MovieOverview movie={movie} />
-        {/*<a href={`https://www.themoviedb.org/video/play?key=${status === 'success' ? trailer.key : ''}`}>Trailer</a>*/}
         <CastList movieId={movie.id} />
         <MovieRecommendations movieId={movie.id} />
       </Wrapper>
