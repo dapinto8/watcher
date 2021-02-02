@@ -20,9 +20,9 @@ const PreviewWrapper = styled(ImageWrapper)`
 export default function Image(props) {
   return (
     <>
-      <PreviewWrapper>
-        <NextImage {...props} width="50" height="50" quality={20} objectFit="cover" />
-      </PreviewWrapper>
+      {/*<PreviewWrapper>
+        <NextImage {...props} width="10" height="10" quality={10} objectFit="cover" />
+      </PreviewWrapper>*/}
       <ImageWrapper>
         <NextImage {...props} layout="fill" objectFit="cover" />
       </ImageWrapper>
