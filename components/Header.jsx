@@ -1,4 +1,5 @@
 import { useUser } from '@/context/userContext';
+import { useCookies } from 'react-cookie';
 import { createRequestToken } from '@/api/auth';
 import Link from 'next/link';
 import Search from '@/components/Search';
@@ -56,9 +57,14 @@ const NavLink = styled.a`
 
 function HeaderComponent() {
   const { user } = useUser();
+  const [cookies, setCookie] = useCookies();
 
   const login = () => {
     createRequestToken().then(({ request_token }) => {
+      setCookie('request_token', request_token, {
+        path: '/',
+        secure: !(process.env.NODE_ENV === 'development')
+      });
       window.location.href = `https://www.themoviedb.org/authenticate/${request_token}?redirect_to=${process.env.SITE_URL}/session`;
     });
   };
