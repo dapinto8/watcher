@@ -29,12 +29,12 @@ const Wrapper = styled.section`
   }
 `;
 
-export default function Session({ requestToken, approved }) {
+export default function Session({ approved }) {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(['session_id']);
 
-  if (approved && !cookies.session_id) {
-    createSession(requestToken).then(({ session_id }) => {
+  if (approved && cookies.request_token && !cookies.session_id) {
+    createSession(cookies.request_token).then(({ session_id }) => {
       setCookie('session_id', session_id, {
         path: '/',
         secure: !(process.env.NODE_ENV === 'development')
@@ -68,10 +68,12 @@ export default function Session({ requestToken, approved }) {
 }
 
 export async function getServerSideProps({ query }) {
+  const props = {
+    approved: false
+  };
+  if (query.approved) props.approved = true;
+
   return {
-    props: {
-      requestToken: query.request_token,
-      approved: query.approved
-    }
+    props
   };
 }
